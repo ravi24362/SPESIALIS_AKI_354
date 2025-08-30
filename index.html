@@ -243,25 +243,43 @@
       cartTotalEl.textContent="Total: Rp "+ total.toLocaleString('id-ID');
        
       // Kirim ke WhatsApp saat klik tombol Pesan
-waLink.addEventListener("click",(e)=>{
-  e.preventDefault(); // cegah link langsung jalan
+      async function saveToSheet(){
+  const name = document.getElementById("custName")?.value || "";
+  const addr = document.getElementById("custAddress")?.value || "";
 
+  let items = cart.map(i => `${i.name} x${i.qty} (Rp ${(i.price*i.qty).toLocaleString('id-ID')})`).join(", ");
+  let data = {
+    name: name,
+    address: addr,
+    items: items,
+    total: total
+  };
+
+  await fetch("PASTE_WEB_APP_URL_HERE", {
+    method: "POST",
+    body: JSON.stringify(data)
+  });
+}
+wwaLink.addEventListener("click", async (e)=>{
+  e.preventDefault();
+
+  // simpan ke Google Sheet
+  await saveToSheet();
+
+  // lalu kirim ke WhatsApp
   let msg="Halo, saya ingin pesan aki:%0A";
   cart.forEach(i=>{
     msg+=`- ${i.name} x${i.qty} (Rp ${(i.price*i.qty).toLocaleString('id-ID')})%0A`;
   });
   msg+=`Total: Rp ${total.toLocaleString('id-ID')}`;
 
-  // ambil nama & alamat dari input
   const name = document.getElementById("custName")?.value || "";
   const addr = document.getElementById("custAddress")?.value || "";
   if(name) msg+=`%0A%0ANama: ${name}`;
   if(addr) msg+=`%0AAlamat: ${addr}`;
 
-  // buka WA
   window.open(`https://wa.me/62881037751668?text=${msg}`,"_blank");
 });
-
 
       function updateCartView(){
   cartItemsEl.innerHTML="";
