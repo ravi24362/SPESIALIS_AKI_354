@@ -18,22 +18,7 @@
       --radius: 16px;
       --radius-lg: 24px;
     }
-    <style>
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:16px;
-  }
-
-  /* Tambahan untuk HP */
-  @media (max-width: 600px){
-    .grid{
-      grid-template-columns: repeat(2, 1fr); /* jadi 2 produk */
-      gap:12px;
-    }
-  }
-</style>
-
+    
     *{box-sizing:border-box} body{margin:0;font-family:system-ui;background:#0f172a;color:var(--text)}
     .header{position:sticky;top:0;z-index:50;background:rgba(2,6,23,.65);backdrop-filter:blur(8px)}
     .header__inner{max-width:1100px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:14px 16px}
@@ -92,6 +77,7 @@
 
   <main class="container">
     <section class="grid">
+      <!-- Produk 1 -->
       <article class="card">
         <div class="card__media"><img src="https://via.placeholder.com/200x150?text=Aki+35Ah" alt="Aki MF 35Ah" style="width:100%;height:100%;object-fit:cover;"></div>
         <div class="card__body">
@@ -99,11 +85,9 @@
           <div class="meta">City Car | Garansi 12 bln</div>
           <div class="price"><span class="price__tag" data-price="950000">Rp 950.000</span></div>
         </div>
-        <button class="plus-btn" 
-                data-name="PowerCell MF 35Ah" 
-                data-price="950000" 
-                data-img="https://via.placeholder.com/200x150?text=Aki+35Ah"><span></span></button>
+        <button class="plus-btn" data-name="PowerCell MF 35Ah" data-price="950000" data-img="https://via.placeholder.com/200x150?text=Aki+35Ah"><span></span></button>
       </article>
+      <!-- Produk 2 -->
       <article class="card">
         <div class="card__media"><img src="https://via.placeholder.com/200x150?text=Aki+60Ah" alt="Aki DIN 60Ah" style="width:100%;height:100%;object-fit:cover;"></div>
         <div class="card__body">
@@ -111,10 +95,98 @@
           <div class="meta">Sedan/MPV | Garansi 12 bln</div>
           <div class="price"><span class="price__tag" data-price="1950000">Rp 1.950.000</span></div>
         </div>
-        <button class="plus-btn" 
-                data-name="VoltPro DIN 60Ah" 
-                data-price="1950000" 
-                data-img="https://via.placeholder.com/200x150?text=Aki+60Ah"><span></span></button>
+        <button class="plus-btn" data-name="VoltPro DIN 60Ah" data-price="1950000" data-img="https://via.placeholder.com/200x150?text=Aki+60Ah"><span></span></button>
+      </article>
+
+      <!-- Produk tambahan -->
+      <article class="card">
+        <div class="card__media"><img src="https://via.placeholder.com/200x150?text=Aki+45Ah" alt="Aki 45Ah"></div>
+        <div class="card__body">
+          <div class="title">PowerCell MF 45Ah</div>
+          <div class="meta">Hatchback | Garansi 12 bln</div>
+          <div class="price"><span class="price__tag" data-price="1250000">Rp 1.250.000</span></div>
+        </div>
+        <button class="plus-btn" data-name="PowerCell MF 45Ah" data-price="1250000" data-img="https://via.placeholder.com/200x150?text=Aki+45Ah"><span></span></button>
+      </article>
+
+      <article class="card">
+        <div class="card__media"><img src="https://via.placeholder.com/200x150?text=Aki+70Ah" alt="Aki 70Ah"></div>
+        <div class="card__body">
+          <div class="title">VoltPro DIN 70Ah</div>
+          <div class="meta">SUV | Garansi 18 bln</div>
+          <div class="price"><span class="price__tag" data-price="2250000">Rp 2.250.000</span></div>
+        </div>
+        <button class="plus-btn" data-name="VoltPro DIN 70Ah" data-price="2250000" data-img="https://via.placeholder.com/200x150?text=Aki+70Ah"><span></span></button>
+      </article>
+
+      <article class="card">
+        <div class="card__media"><img src="https://via.placeholder.com/200x150?text=Aki+100Ah" alt="Aki 100Ah"></div>
+        <div class="card__body">
+          <div class="title">MegaVolt 100Ah</div>
+          <div class="meta">Truk Ringan | Garansi 18 bln</div>
+          <div class="price"><span class="price__tag" data-price="3250000">Rp 3.250.000</span></div>
+        </div>
+        <button class="plus-btn" data-name="MegaVolt 100Ah" data-price="3250000" data-img="https://via.placeholder.com/200x150?text=Aki+100Ah"><span></span></button>
+      </article>
+
+      <article class="card">
+        <div class="card__media"><img src="https://via.placeholder.com/200x150?text=Aki+120Ah" alt="Aki 120Ah"></div>
+        <div class="card__body">
+          <div class="title">MegaVolt Heavy 120Ah</div>
+          <div class="meta">Bus/Truk | Garansi 24 bln</div>
+          <div class="price"><span class="price__tag" data-price="3950000">Rp 3.950.000</span></div>
+        </div>
+        <button class="plus-btn" data-name="MegaVolt Heavy 120Ah" data-price="3950000" data-img="https://via.placeholder.com/200x150?text=Aki+120Ah"><span></span></button>
+      </article>
+
+      <article class="card">
+        <div class="card__media"><img src="https://via.placeholder.com/200x150?text=Aki+Motor+5Ah" alt="Aki Motor 5Ah"></div>
+        <div class="card__body">
+          <div class="title">MotoCell 5Ah</div>
+          <div class="meta">Motor Bebek | Garansi 6 bln</div>
+          <div class="price"><span class="price__tag" data-price="250000">Rp 250.000</span></div>
+        </div>
+        <button class="plus-btn" data-name="MotoCell 5Ah" data-price="250000" data-img="https://via.placeholder.com/200x150?text=Aki+Motor+5Ah"><span></span></button>
+      </article>
+
+      <article class="card">
+        <div class="card__media"><img src="https://via.placeholder.com/200x150?text=Aki+Motor+7Ah" alt="Aki Motor 7Ah"></div>
+        <div class="card__body">
+          <div class="title">MotoCell 7Ah</div>
+          <div class="meta">Motor Matic | Garansi 6 bln</div>
+          <div class="price"><span class="price__tag" data-price="350000">Rp 350.000</span></div>
+        </div>
+        <button class="plus-btn" data-name="MotoCell 7Ah" data-price="350000" data-img="https://via.placeholder.com/200x150?text=Aki+Motor+7Ah"><span></span></button>
+      </article>
+
+      <article class="card">
+        <div class="card__media"><img src="https://via.placeholder.com/200x150?text=Aki+Motor+9Ah" alt="Aki Motor 9Ah"></div>
+        <div class="card__body">
+          <div class="title">MotoCell 9Ah</div>
+          <div class="meta">Sport 150cc | Garansi 6 bln</div>
+          <div class="price"><span class="price__tag" data-price="480000">Rp 480.000</span></div>
+        </div>
+        <button class="plus-btn" data-name="MotoCell 9Ah" data-price="480000" data-img="https://via.placeholder.com/200x150?text=Aki+Motor+9Ah"><span></span></button>
+      </article>
+
+      <article class="card">
+        <div class="card__media"><img src="https://via.placeholder.com/200x150?text=Aki+Motor+12Ah" alt="Aki Motor 12Ah"></div>
+        <div class="card__body">
+          <div class="title">MotoCell Pro 12Ah</div>
+          <div class="meta">Sport 250cc | Garansi 12 bln</div>
+          <div class="price"><span class="price__tag" data-price="650000">Rp 650.000</span></div>
+        </div>
+        <button class="plus-btn" data-name="MotoCell Pro 12Ah" data-price="650000" data-img="https://via.placeholder.com/200x150?text=Aki+Motor+12Ah"><span></span></button>
+      </article>
+
+      <article class="card">
+        <div class="card__media"><img src="https://via.placeholder.com/200x150?text=Aki+Motor+Lithium" alt="Aki Motor Lithium"></div>
+        <div class="card__body">
+          <div class="title">Lithium Moto 6Ah</div>
+          <div class="meta">Motor Premium | Garansi 24 bln</div>
+          <div class="price"><span class="price__tag" data-price="1250000">Rp 1.250.000</span></div>
+        </div>
+        <button class="plus-btn" data-name="Lithium Moto 6Ah" data-price="1250000" data-img="https://via.placeholder.com/200x150?text=Aki+Motor+Lithium"><span></span></button>
       </article>
     </section>
   </main>
@@ -171,17 +243,5 @@
         const name=btn.dataset.name;
         const price=Number(btn.dataset.price);
         const img=btn.dataset.img;
-        const exist=cart.find(i=>i.name===name);
-        if(exist){exist.qty++} else{cart.push({name,price,qty:1,img})}
-        count++; cartCountEl.textContent=count;
-        updateCartView();
-      })
-    });
-
-    cartBtn.addEventListener('click',()=>{cartModal.classList.add('active')});
-    closeModal.addEventListener('click',()=>{cartModal.classList.remove('active')});
-    window.addEventListener('click',(e)=>{if(e.target===cartModal)cartModal.classList.remove('active')});
-  </script>
-</body>
-</html>
-
+        const exist=cart.find(i=>i
+  
