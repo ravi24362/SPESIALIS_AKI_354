@@ -18,23 +18,21 @@
       --radius: 16px;
       --radius-lg: 24px;
     }
-    /* Grid default */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-}
+    <style>
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:16px;
+  }
 
-/* Atur supaya di HP (max 600px) pas 2 produk */
-@media (max-width: 600px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+  /* Tambahan untuk HP */
+  @media (max-width: 600px){
+    .grid{
+      grid-template-columns: repeat(2, 1fr); /* jadi 2 produk */
+      gap:12px;
+    }
   }
-  .card__media {
-    aspect-ratio: 1/1; /* biar kotak di layar kecil */
-  }
-}
+</style>
 
     *{box-sizing:border-box} body{margin:0;font-family:system-ui;background:#0f172a;color:var(--text)}
     .header{position:sticky;top:0;z-index:50;background:rgba(2,6,23,.65);backdrop-filter:blur(8px)}
