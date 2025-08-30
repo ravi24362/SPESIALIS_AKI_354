@@ -161,121 +161,59 @@
   </div>
 
   <script>
-    const products=[
-      {id:1,name:"Aki GS Astra 12V 45Ah",price:850000,img:"https://dummyimage.com/400x300/222/fff&text=Aki+GS"},
-      {id:2,name:"Aki Yuasa 12V 35Ah",price:750000,img:"https://dummyimage.com/400x300/333/fff&text=Aki+Yuasa"},
-      {id:3,name:"Aki Incoe 12V 55Ah",price:950000,img:"https://dummyimage.com/400x300/444/fff&text=Aki+Incoe"},
-      {id:4,name:"Aki Bosch 12V 60Ah",price:1250000,img:"https://dummyimage.com/400x300/555/fff&text=Aki+Bosch"},
-      {id:5,name:"Aki Yuasa 12V 35Ah",price:750000,img:"https://dummyimage.com/400x300/333/fff&text=Aki+Yuasa"},
-      {id:6,name:"Aki Yuasa 12V 35Ah",price:750000,img:"https://dummyimage.com/400x300/333/fff&text=Aki+Yuasa"},
-      {id:7,name:"Aki Yuasa 12V 35Ah",price:750000,img:"https://dummyimage.com/400x300/333/fff&text=Aki+Yuasa"},
-      {id:8,name:"Aki Yuasa 12V 35Ah",price:750000,img:"https://dummyimage.com/400x300/333/fff&text=Aki+Yuasa"},
-      {id:9,name:"Aki Yuasa 12V 35Ah",price:750000,img:"https://dummyimage.com/400x300/333/fff&text=Aki+Yuasa"},
-      {id:10,name:"Aki Yuasa 12V 35Ah",price:750000,img:"https://dummyimage.com/400x300/333/fff&text=Aki+Yuasa"},
-    ];
+const products=[
+  {id:1,name:"Aki GS Astra 12V 45Ah",price:850000,img:"https://dummyimage.com/400x300/222/fff&text=Aki+GS"},
+  {id:2,name:"Aki Yuasa 12V 35Ah",price:750000,img:"https://dummyimage.com/400x300/333/fff&text=Aki+Yuasa"},
+  {id:3,name:"Aki Incoe 12V 55Ah",price:950000,img:"https://dummyimage.com/400x300/444/fff&text=Aki+Incoe"},
+  {id:4,name:"Aki Bosch 12V 60Ah",price:1250000,img:"https://dummyimage.com/400x300/555/fff&text=Aki+Bosch"},
+];
 
-    const grid=document.getElementById("productGrid");
-    const cartBtn=document.getElementById("cartBtn");
-    const cartModal=document.getElementById("cartModal");
-    const closeCart=document.getElementById("closeCart");
-    const cartItemsEl=document.getElementById("cartItems");
-    const cartTotalEl=document.getElementById("cartTotal");
-    const cartCountEl=document.getElementById("cartCount");
-    const waLink=document.getElementById("waLink");
+const grid=document.getElementById("productGrid");
+const cartBtn=document.getElementById("cartBtn");
+const cartModal=document.getElementById("cartModal");
+const closeCart=document.getElementById("closeCart");
+const cartItemsEl=document.getElementById("cartItems");
+const cartTotalEl=document.getElementById("cartTotal");
+const cartCountEl=document.getElementById("cartCount");
+const waLink=document.getElementById("waLink");
 
-    let cart=[];
-    let count=0;
-    let total=0;
+let cart=[];
+let count=0;
+let total=0;
 
-    // tampilkan produk
-    products.forEach(p=>{
-      const card=document.createElement('div');
-      card.className="card";
-      card.innerHTML=`
-        <img src="${p.img}" alt="${p.name}">
-        <div class="info">
-          <div class="title">${p.name}</div>
-          <div class="price">Rp ${p.price.toLocaleString('id-ID')}</div>
-        </div>
-        <button class="add-btn" data-id="${p.id}">+ Keranjang</button>
-      `;
-      grid.appendChild(card);
-    });
+// tampilkan produk
+products.forEach(p=>{
+  const card=document.createElement('div');
+  card.className="card";
+  card.innerHTML=`
+    <img src="${p.img}" alt="${p.name}">
+    <div class="info">
+      <div class="title">${p.name}</div>
+      <div class="price">Rp ${p.price.toLocaleString('id-ID')}</div>
+    </div>
+    <button class="add-btn" data-id="${p.id}">+ Keranjang</button>
+  `;
+  grid.appendChild(card);
+});
 
-    // tambah ke keranjang
-    document.querySelectorAll('.add-btn').forEach(btn=>{
-      btn.addEventListener('click',()=>{
-        const id=btn.dataset.id;
-        const prod=products.find(p=>p.id==id);
-        const found=cart.find(c=>c.id==id);
-        if(found){
-          found.qty++;
-        }else{
-          cart.push({...prod,qty:1});
-        }
-        count++;
-        cartCountEl.textContent=count;
-        updateCartView();
-      });
-    });
-
-    function updateCartView(){
-      cartItemsEl.innerHTML="";
-      total=0;
-      cart.forEach((item,index)=>{
-        total+=item.price*item.qty;
-        const div=document.createElement('div');
-        div.className="cart-item";
-        div.innerHTML=`
-          <img src="${item.img}" alt="${item.name}">
-          <div class="info">
-            <div class="name">${item.name}</div>
-            <div class="qty">Rp ${(item.price*item.qty).toLocaleString('id-ID')}</div>
-            <div class="qty-controls">
-              <button class="minus" data-index="${index}">-</button>
-              <span>${item.qty}</span>
-              <button class="plus" data-index="${index}">+</button>
-            </div>
-          </div>
-        `;
-        cartItemsEl.appendChild(div);
-      });
-      cartTotalEl.textContent="Total: Rp "+ total.toLocaleString('id-ID');
-      let isSending = false; // flag pengaman
-       // 🔹 Simpan ke Google Sheet
-    async function saveToSheet(){
-      const name=document.getElementById("custName").value||"";
-      const addr=document.getElementById("custAddress").value||"";
-      let items=cart.map(i=>`${i.name} x${i.qty} (Rp ${(i.price*i.qty).toLocaleString('id-ID')})`).join(", ");
-      let data={name,address:addr,items,total};
-
-      await fetch("https://script.google.com/macros/s/AKfycbwHDANYBEvIRV3L1GOhRuc-QEudffRIEj2s_zPGcTC_6JRWxN-jG3kqpgpxy_7bQGGV/exec",{
-        method:"POST",
-        body:JSON.stringify(data)
-      });
+// tambah ke keranjang
+document.querySelectorAll('.add-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const id=btn.dataset.id;
+    const prod=products.find(p=>p.id==id);
+    const found=cart.find(c=>c.id==id);
+    if(found){
+      found.qty++;
+    }else{
+      cart.push({...prod,qty:1});
     }
-      // Kirim ke WhatsApp saat klik tombol Pesan
-    waLink.addEventListener("click",async (e)=>{
-      e.preventDefault();
-      await saveToSheet(); // simpan ke sheet dulu
-      if(isSending) return; // cegah double klik
-  isSending = true;
+    count++;
+    cartCountEl.textContent=count;
+    updateCartView();
+  });
+});
 
-      let msg="Halo, saya ingin pesan aki:%0A";
-      cart.forEach(i=>{
-        msg+=`- ${i.name} x${i.qty} (Rp ${(i.price*i.qty).toLocaleString('id-ID')})%0A`;
-      });
-      msg+=`Total: Rp ${total.toLocaleString('id-ID')}`;
-      const name=document.getElementById("custName").value||"";
-      const addr=document.getElementById("custAddress").value||"";
-      if(name) msg+=`%0A%0ANama: ${name}`;
-      if(addr) msg+=`%0AAlamat: ${addr}`;
-
-      window.open(`https://wa.me/62881037751668?text=${msg}`,"_blank");
-    });
-
-
-      function updateCartView(){
+function updateCartView(){
   cartItemsEl.innerHTML="";
   total=0;
   cart.forEach((item,index)=>{
@@ -324,99 +262,48 @@
   });
 }
 
+// fungsi simpan ke Google Sheet
+async function saveToSheet(){
+  const name=document.getElementById("custName").value||"";
+  const addr=document.getElementById("custAddress").value||"";
+  let items=cart.map(i=>`${i.name} x${i.qty} (Rp ${(i.price*i.qty).toLocaleString('id-ID')})`).join(", ");
+  let data={name,address:addr,items,total};
 
-      function updateCartView(){
-  cartItemsEl.innerHTML="";
-  total=0;
-  cart.forEach((item,index)=>{
-    total+=item.price*item.qty;
-    const div=document.createElement('div');
-    div.className="cart-item";
-    div.innerHTML=`
-      <img src="${item.img}" alt="${item.name}">
-      <div class="info">
-        <div class="name">${item.name}</div>
-        <div class="qty">Rp ${(item.price*item.qty).toLocaleString('id-ID')}</div>
-        <div class="qty-controls">
-          <button class="minus" data-index="${index}">-</button>
-          <span>${item.qty}</span>
-          <button class="plus" data-index="${index}">+</button>
-        </div>
-      </div>
-    `;
-    cartItemsEl.appendChild(div);
+  await fetch("https://script.google.com/macros/s/AKfycbwHDANYBEvIRV3L1GOhRuc-QEudffRIEj2s_zPGcTC_6JRWxN-jG3kqpgpxy_7bQGGV/exec",{
+    method:"POST",
+    body:JSON.stringify(data)
   });
-  cartTotalEl.textContent="Total: Rp "+ total.toLocaleString('id-ID');
+}
 
-  // Buat pesan WhatsApp
+// hanya sekali event listener Pesan
+let isSending=false;
+waLink.addEventListener("click",async (e)=>{
+  e.preventDefault();
+  if(isSending) return;
+  isSending=true;
+
+  await saveToSheet();
+
+  // buat pesan WhatsApp
   let msg="Halo, saya ingin pesan aki:%0A";
   cart.forEach(i=>{
     msg+=`- ${i.name} x${i.qty} (Rp ${(i.price*i.qty).toLocaleString('id-ID')})%0A`;
   });
   msg+=`Total: Rp ${total.toLocaleString('id-ID')}`;
 
-  // Tambahkan nama & alamat (ambil value dari input)
-  const name = document.getElementById("custName")?.value || "";
-  const addr = document.getElementById("custAddress")?.value || "";
+  const name=document.getElementById("custName").value||"";
+  const addr=document.getElementById("custAddress").value||"";
   if(name) msg+=`%0A%0ANama: ${name}`;
   if(addr) msg+=`%0AAlamat: ${addr}`;
 
-  waLink.href=`https://wa.me/62881037751668?text=${msg}`;
+  window.open(`https://wa.me/62881037751668?text=${msg}`,"_blank");
 
-  // event listener tombol + dan -
-  document.querySelectorAll('.qty-controls .plus').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      let i=btn.dataset.index;
-      cart[i].qty++;
-      count++;
-      cartCountEl.textContent=count;
-      updateCartView();
-    });
-  });
-  document.querySelectorAll('.qty-controls .minus').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      let i=btn.dataset.index;
-      if(cart[i].qty>1){
-        cart[i].qty--;
-        count--;
-      } else {
-        count-=cart[i].qty;
-        cart.splice(i,1);
-      }
-      cartCountEl.textContent=count;
-      updateCartView();
-    });
-  });
-}
+  isSending=false;
+});
 
-      // event listener untuk tombol + dan -
-      document.querySelectorAll('.qty-controls .plus').forEach(btn=>{
-        btn.addEventListener('click',()=>{
-          let i=btn.dataset.index;
-          cart[i].qty++;
-          count++;
-          cartCountEl.textContent=count;
-          updateCartView();
-        });
-      });
-      document.querySelectorAll('.qty-controls .minus').forEach(btn=>{
-        btn.addEventListener('click',()=>{
-          let i=btn.dataset.index;
-          if(cart[i].qty>1){
-            cart[i].qty--;
-            count--;
-          } else {
-            count-=cart[i].qty;
-            cart.splice(i,1);
-          }
-          cartCountEl.textContent=count;
-          updateCartView();
-        });
-      });
-    }
+cartBtn.addEventListener('click',()=>cartModal.style.display="flex");
+closeCart.addEventListener('click',()=>cartModal.style.display="none");
+</script>
 
-    cartBtn.addEventListener('click',()=>cartModal.style.display="flex");
-    closeCart.addEventListener('click',()=>cartModal.style.display="none");
-  </script>
 </body>
 </html>
